@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Ryan H. Choi | Note</title>
+<meta charset="utf-8">
+<meta name="description" content="Ryan Choi, 최현, note">
+<link rel="stylesheet" type="text/css" href="css/style.css" />
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-67559740-1', 'auto');
+  ga('send', 'pageview');
+</script>
+<script type="text/javascript" src="./js/utils.js"></script>
+</head>
+
+<body>
+
+<div id="nav" class="nav"></div>
+
+<div id="main">
+<h2>Development</h2>
+
+<script>
+var entries = [
+    {
+        name: "btrfs",
+        url: "dev/btrfs.md"
+    },
+    {
+        name: "eclipse",
+        url: "dev/eclipse.md"
+    },
+    {
+        name: "ubuntu",
+        url: "dev/ubuntu.md"
+    },
+    {
+        name: "webdav",
+        url: "dev/webdav.md"
+    }
+];
+
+document.getElementById("main").appendChild(utils.makeEntry(entries));
+</script>
+
+</div>
+
+<div id="footer"></div>
+
+<script type="text/javascript" src="js/main.js"></script>
+
+</body>
+</html>

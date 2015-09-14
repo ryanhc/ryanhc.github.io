@@ -1,0 +1,21 @@
+h1, h2, h3 {
+    font-size: 120%;
+}
+h2, h3 {
+    margin-top: 30px;
+    border-bottom: 1px solid;
+}
+li { margin-bottom: 5px; }
+body {
+    margin-left:auto;
+    margin-right:auto;
+    padding: 0px 30px;
+    width:960px;
+    font-size: 12pt;
+    font-family: sans-serif;
+}
+#footer {
+    margin-top: 30px;
+    font-size: small;
+}
+a:link, a:visited { color: #0000FF; }

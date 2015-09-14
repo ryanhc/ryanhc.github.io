@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Water</title>
+<style>
+body {
+    margin-left: auto;
+    margin-right: auto;
+    width: 400px;
+    border-style: solid;
+    border-color: red;
+}
+
+#content {
+
+}
+
+.cell {
+    display: inline-block;
+    width: 80px;
+}
+
+.cell1 {
+    display: inline-block;
+    width: 100px;
+}
+
+.button {
+    margin: auto;
+    width: 30%;
+}
+
+.display {
+    width: 30%;
+}
+
+</style>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script>
+var avg;
+var howMany;
+var curPrice;
+var targetAvg;
+
+function waterClicked() {
+    avg = document.getElementById("avgCost").value;
+    howMany = document.getElementById("howMany").value;
+    curPrice = document.getElementById("curPrice").value;
+    targetAvg = document.getElementById("targetAvg").value;
+    var r = water(avg, howMany, curPrice, targetAvg);
+
+    document.getElementById("val").value = r;
+
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+}
+
+function water(avg, howMany, curPrice, targetAvg) {
+    var additionalUnit = ((avg-targetAvg) * howMany) / (targetAvg-curPrice);
+    var additionalCost = additionalUnit * curPrice;
+
+    additionalUnit = additionalUnit.toFixed(2);
+    additionalCost = additionalCost.toFixed(2);
+    var r = additionalUnit + " * @"+curPrice + " = " + additionalCost;
+    console.log(r);
+    return r;
+}
+
+function drawChart() {
+    //var data = google.visualization.arrayToDataTable([
+    //        ['Year', 'Sales', 'Expenses'],
+    //        ['2004',  1000,      400],
+    //        ['2005',  1170,      460],
+    //        ['2006',  660,       1120],
+    //        ['2007',  1030,      540]
+    //]);
+
+    var numOfCols = 11;
+    var xInc = (avg - targetAvg) / numOfCols;
+    var rawData = new Array(numOfCols+1);
+    rawData[0] = ['Avg Cost', 'Additional Cost'];
+    var curTarget = avg;
+    for (var i = 1; i < numOfCols+1; i++) {
+        var item = new Array(2);
+        var unit = ((avg-curTarget) * howMany) / (curTarget - curPrice);
+        var cost = unit * curPrice;
+
+        item[0] = curTarget;
+        item[1] = cost;
+        rawData[i] = item;
+        curTarget -= xInc;
+    }
+
+    console.log(rawData);
+
+    var data = google.visualization.arrayToDataTable(rawData);
+    var options = {
+        title: 'Company Performance',
+        curveType: 'function',
+        legend: { position: 'bottom' }
+    };
+
+    var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+    chart.draw(data, options);
+}
+
+</script>
+</head>
+
+<body>
+
+<div id="content">
+    <div>
+        <div class="cell1">My Avg. Cost</div>
+        <div class="cell"><input id="avgCost" type="number"></div>
+    </div>
+    <div>
+        <div class="cell1">HowMany</div>
+        <div class="cell"><input id="howMany" type="number"></div>
+    </div>
+    <div>
+        <div class="cell1">Cur Cost</div>
+        <div class="cell"><input id="curPrice" type="number"></div>
+    </div>
+    <div>
+        <div class="cell1">Target Avg</div>
+        <div class="cell"><input id="targetAvg" type="number"></div>
+    </div>
+    <div class="button">
+      <input type="button" value="Click" onclick="waterClicked()">
+    </div>
+    <div class="display">
+      <input id="val" type="text">
+    </div>
+</div>
+
+<div id="curve_chart" style="width: 900px; height: 500px"></div>
+
+</body>
+</html>
