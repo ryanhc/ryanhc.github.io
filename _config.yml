@@ -4,42 +4,42 @@ gems:
   - jekyll-paginate
 
 # Site settings
-title: "Mediator"
-description: > # this means to ignore newlines until "email:"
-   A Jekyll theme - Medium inspired
+title: "Ryan Choi (최현)"
+description: > # this means to ignore newlines until "email:" # A Jekyll theme - Medium inspired
 
-email: a-mail@mail.mail
-#blog logo
-logo: "/assets/images/df_logo.jpg"
+email: ryan.h.choi@gmail.com
+# blog logo
+logo: "/assets/images/logo.png"
 float_logo: true # true, false (default)
 
 # blog cover
-cover: "/assets/images/cA4aKEIPQrerBnp1yGHv_IMG_9534-3-2.jpg"
+cover: "/assets/images/cover.jpg"
 
-name: 'Dirk Fabisch'
-author: 'Dirk Fabisch'
+name: 'Ryan Hyun Choi'
+author: 'Ryan Hyun Choi'
 author_image: "/assets/images/author.jpg"
 
-paginate:	5
+paginate: 10
+paginate_path: "/blog/page:num/"
 
-url: "http://myblog.***.***" # the base hostname & protocol for your site
+url: "http://www.rhchoi.com" # the base hostname & protocol for your site
 baseurl: ""
-#used to display twitter cards
-twitter_handle: '@dirkfabisch'
+# used to display twitter cards
+# twitter_handle: '@ryanhc20'
 
-#fill in disqus shortname to use disqus
-#disqus: disqus-shortname
+# fill in disqus shortname to use disqus
+# disqus: disqus-shortname
 
-#google_analytics: UA-XXXXX-X
+google_analytics: UA-67559740-1
 
 # social icons and sharing options
 social:
-  - icon:	twitter
-    url:	https://twitter.com/dirkfabisch
-    desc: Follow me on twitter
-    share_url: http://twitter.com/share
-    share_title: ?text=
-    share_link: "&amp;url="
+# - icon:	twitter
+#    url:	https://twitter.com/dirkfabisch
+#    desc: Follow me on twitter
+#    share_url: http://twitter.com/share
+#    share_title: ?text=
+#    share_link: "&amp;url="
 
 #  - icon:	facebook
 #    url:	https://facebook.com/???
@@ -49,7 +49,7 @@ social:
 #    share_link: "&amp;u="
 
   - icon:	github
-    url:	https://github.com/dirkfabisch
+    url:	https://github.com/ryanhc
     desc:	Fork me on github
     share_url:
     share_title:

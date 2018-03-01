@@ -3,9 +3,14 @@
 <!DOCTYPE html>
 <html>
   {% include head.html %}
+
   <body itemscope itemtype="http://schema.org/Article">
-    {% include header.html %}
-    <main class="content" role="main">
+      <header class="blog-header">
+        {% include navigation.html %}
+      </header>
+
+      <main class="content" role="main">
+
       <article class="post">
         {% if page.image %}
         <div class="article-image">
@@ -34,8 +39,10 @@
           </div>
         </div>
         <br>
+        <!--
         <br>
         <br>
+        -->
         {% endif %}
         <section class="post-content">
           <a name="topofpage"></a>
@@ -50,7 +57,7 @@
       <div class="inner">
         <h1 class="blog-title">{{ site.title }}</h1>
         <h2 class="blog-description">{{ site.description }}</h2>
-        <a href={{ "/" | prepend: site.baseurl }} class="btn">Back to Overview</a>
+        <a href={{ "/" | prepend: site.baseurl }} class="btn">Back to Home</a>
       </div>
     </div>
     {% include javascripts.html %}
