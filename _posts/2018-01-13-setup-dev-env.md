@@ -10,7 +10,7 @@ It also serves me as a reminder page to use when setting up a new work environme
 
 This document is incrementally updated. The content is tested on Ubuntu 16.04.
 
-Last updated: 2018/3/29
+Last updated: 2018/5/1
 
 <!--
 image: /assets/article_images/2014-11-30-mediator_features/night-track.JPG
@@ -190,17 +190,20 @@ sudo service apache2 restart
 ## Samba
 ### Set up a Samba server
 ```sh
+man smb.conf # very useful
 sudo vi /etc/samba/smb.conf
 ...
 [ryanc]
 comment = Ubuntu File Server
 path = /home/ryanc
-browsable = yes
-guest ok = no
-read only = no
+valid users = ryanc
+writable = yes
 create mask = 0644
+force create mode = 0644
 directory mask = 0755
+force directory mode = 0755
 
+sudo test parm # check samba config file for any errors
 sudo service smbd restart
 ```
 
@@ -220,6 +223,22 @@ sudo btrfs subvolume list test
 
 # Delete a subvolume (root required)
 sudo btrfs subvolume delete test
+```
+
+## Mounting a Samba Drive
+Use ``mount`` to test a drive. Then, use autofs.
+
+Add Samba login credentials to a file.
+```sh
+vi ~/.smbcredentials
+username=ryanc
+password=1234
+```
+
+```sh
+chmod 600 ~/.smbcredentials
+sudo apt-get install smbclient cifs-utils
+sudo mount -t cifs -o credentials=/home/ryanc/.smbcredentials,uid=1000,gid=1000,iocharset=utf8 //192.168.0.10/home /media/nas
 ```
 
 ## autofs
@@ -245,13 +264,6 @@ sudo vi /etc/auto.drives
 hdd1 -fstype=btrfs :/dev/sdb1
 ds713p -fstype=nfs 192.168.0.10:/home/ryanc
 win -fstype=cifs,rw,dir_mode=0700,file_mode=0600,uid=1000,gid=1000,credentials=/home/ryanc/.smbcredentials ://192.168.0.5/ryanc
-```
-
-Add Samba login credentials to a file. TODO: clear text is not a good thing to do.
-```sh
-vi ~/.smbcredentials
-username=ryanc
-password=1234
 ```
 
 Finally, restart the autofs service.
