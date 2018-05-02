@@ -132,59 +132,39 @@ Use the following keybindings to preview the markdown.
 | SPC b f  | Normal | Format current buffer      |
 
 
-## Apache
-### Enable personal public\_html
+
+## nginx
 
 ```sh
-sudo a2enmod userdir
-sudo service apache2 restart
+sudo add-apt-repository ppa:nginx/development
+sudo apt-get update && sudo apt-get install nginx-full
+sudo usermod -a -G www-data ryanc
 ```
 
 ### WebDav
 
 ```sh
-sudo apt-get install apache2 apache2-utils
+sudo htpasswd -c /etc/nginx/.htpasswd ryanc
+vi /etc/nginx/sites-available/default
 
-# setup directory
-sudo mkdir /var/www/webdav
-sudo chown -R www-data:www-data /var/www/webdav
+server {
+  ...
+  index index.html index.php;
+  charset utf-8
+  client_body_temp_path /var/www/html/dav/temp;
 
-# enable apache modules
-sudo a2enmod dav
-sudo a2enmod dav_fs
-sudo a2enmod auth_digest
+  location /webdav {
+    alias /home/$remote_user;
+    autoindex on;
+    auth_basic "Restricted Access";
+    auth_basic_user_file /etc/nginx/.htpasswd;
+    dav_methods PUT DELETE MKCOL COPY MOVE;
+    dav_ext_methods PROPFIND OPTIONS;
+    dav_access user:rw group:rw all:r;
+  }
+}
 
-# setup conf
-vi /etc/apache2/sites-available/000-default.conf
-
-<VirtualHost *:80>
-    ServerAdmin webmaster@localhost
-    DocumentRoot /var/www/html
-    ErrorLog ${APACHE_LOG_DIR}/error.log
-    CustomLog ${APACHE_LOG_DIR}/access.log combined
-
-    Alias /webdav /var/www/webdav
-    <Directory /var/www/webdav>
-        Options Indexes MultiViews FollowSymLinks
-        AllowOverride None
-        Order allow,deny
-        allow from all
-    </Directory>
-    <Location /webdav>
-        DAV On
-        AuthType Digest
-        AuthName "webdav"
-        AuthUserFile /etc/apache2/webdav.pwd
-        Require valid-user
-    </Location>
-</VirtualHost>
-
-# add a user account
-sudo htdigest -c /etc/apache2/webdav.pwd webdav <userid>
-sudo chown www-data:www-data /etc/apache2/webdav.pwd
-
-# restart apache
-sudo service apache2 restart
+sudo service nginx reload
 ```
 
 ## Samba
@@ -332,3 +312,55 @@ sudo sed -i.bak '/fi/a #xrdp multiple users configuration \n mate-session \n' /e
 ref: [remote access](http://ubuntuhandbook.org/index.php/2016/07/remote-access-ubuntu-16-04/)
 <!-- http://goodtogreate.tistory.com/entry/%EC%9A%B0%EB%B6%84%ED%88%AC-1604-%EC%9B%90%EA%B2%A9-%EB%8D%B0%EC%8A%A4%ED%81%AC%ED%83%91-%EC%84%A4%EC%A0%95 -->
 
+## Apache
+### Enable personal public\_html
+```sh
+sudo a2enmod userdir
+sudo service apache2 restart
+```
+
+### WebDav
+```sh
+sudo apt-get install apache2 apache2-utils
+
+# setup directory
+sudo mkdir /var/www/webdav
+sudo chown -R www-data:www-data /var/www/webdav
+
+# enable apache modules
+sudo a2enmod dav
+sudo a2enmod dav_fs
+sudo a2enmod auth_digest
+
+# setup conf
+vi /etc/apache2/sites-available/000-default.conf
+
+<VirtualHost *:80>
+    ServerAdmin webmaster@localhost
+    DocumentRoot /var/www/html
+    ErrorLog ${APACHE_LOG_DIR}/error.log
+    CustomLog ${APACHE_LOG_DIR}/access.log combined
+
+    Alias /webdav /var/www/webdav
+    <Directory /var/www/webdav>
+        Options Indexes MultiViews FollowSymLinks
+        AllowOverride None
+        Order allow,deny
+        allow from all
+    </Directory>
+    <Location /webdav>
+        DAV On
+        AuthType Digest
+        AuthName "webdav"
+        AuthUserFile /etc/apache2/webdav.pwd
+        Require valid-user
+    </Location>
+</VirtualHost>
+
+# add a user account
+sudo htdigest -c /etc/apache2/webdav.pwd webdav <userid>
+sudo chown www-data:www-data /etc/apache2/webdav.pwd
+
+# restart apache
+sudo service apache2 restart
+```
