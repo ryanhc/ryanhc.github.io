@@ -227,14 +227,14 @@ We mount a local hdd, an nfs, and a samba network drive.
 
 ```sh
 sudo apt install autofs
-sudo mkdir -p /media/hdd1
-sudo mkdir -p /media/ds713p
-sudo mkdir -p /media/win
+sudo mkdir -p /media/mount/hdd1
+sudo mkdir -p /media/mount/ds713p
+sudo mkdir -p /media/mount/nfs
 
 sudo vi /etc/auto.master
-# Use /media as the mounting point to mount a device using
+# Use /media/mount as the mounting point to mount a device using
 # the settings defined in /etc/auto.drives
-/media /etc/auto.drives
+/media/mount /etc/auto.drives
 ```
 
 ```sh
@@ -242,8 +242,8 @@ cp /etc/auto.misc /etc/auto.drives
 sudo vi /etc/auto.drives
 
 hdd1 -fstype=btrfs :/dev/sdb1
-ds713p -fstype=nfs 192.168.0.10:/home/ryanc
-win -fstype=cifs,rw,dir_mode=0700,file_mode=0600,uid=1000,gid=1000,credentials=/home/ryanc/.smbcredentials ://192.168.0.5/ryanc
+nfs -fstype=nfs 192.168.0.10:/home/ryanc
+ds713p -fstype=cifs,rw,dir_mode=0755,file_mode=0644,uid=1000,gid=1000,iocharset=utf8,credentials=/home/ryanc/.smbcredentials ://192.168.0.10/home
 ```
 
 Finally, restart the autofs service.
