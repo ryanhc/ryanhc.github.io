@@ -7,10 +7,14 @@ plugins:
 title: "Ryan Choi (최현)"
 description: > # this means to ignore newlines until "email:" # A Jekyll theme - Medium inspired
 
+# markdown: kramdown
+# kramdown:
+#   input: GFM
+
 email: ryan.h.choi@gmail.com
 # blog logo
 logo: "/assets/images/logo.png"
-float_logo: true # true, false (default)
+float_logo: false # displays a logo on top left corner
 
 # blog cover
 cover: "/assets/images/cover.jpg"
