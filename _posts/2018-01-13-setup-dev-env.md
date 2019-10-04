@@ -119,24 +119,6 @@ sudo test parm # check samba config file for any errors
 sudo service smbd restart
 ```
 
-## Howto: btrfs
-After formatting a HDD in btrfs, we can use the following
-commands to create snapshots.
-
-```sh
-# Create a subvolume
-btrfs subvolume create test
-
-# Create a snapshot from subvolume test
-btrfs subvolume snapshot test snapshot
-
-# List subvolumes related to test (root required)
-sudo btrfs subvolume list test
-
-# Delete a subvolume (root required)
-sudo btrfs subvolume delete test
-```
-
 ## Mounting a Samba Drive
 Use ``mount`` to test a drive. Then, use autofs.
 
@@ -183,27 +165,6 @@ Finally, restart the autofs service.
 sudo service autofs restart
 ```
 
-## Version Management using Snapshots
-Using btrfs, we can easily create snapshots.
-
-```sh
-vi backup.sh
-#!/bin/sh
-
-if [ -d /media/hdd1/snapshots/current ] ; then \
-    rsync -avz --delete --delete-excluded --exclude-from "/home/ryanc/bin/backup_ignore.txt" /home/ryanc/ /media/hdd1/snapshots/current ; \
-    touch /media/hdd1/snapshots/current
-    d=`date +"%Y%m%d_%H%M"` ; \
-    btrfs subvolume snapshot /media/hdd1/snapshots/current /media/hdd1/snapshots/$d ; \
-fi;
-```
-
-Run the script using cron
-```sh
-crontab -e
-# Run the script at 11pm everyday
-0 23 * * * sh /home/ryanc/bin/backup.sh
-```
 
 ## Eclipse shortcuts
 Useful Eclipse shortcuts.
