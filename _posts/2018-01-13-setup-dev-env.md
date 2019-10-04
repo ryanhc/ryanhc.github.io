@@ -1,16 +1,15 @@
 ---
 layout: post
 title:  "Development Settings"
-date:   2018-1-13 00:00:00
+date:   2018-01-13 00:00:00
+update: 2018-05-01 00:00:00
 categories: dev
 ---
 
 This page describes my development settings that I use everyday.
 It also serves me as a reminder page to use when setting up a new work environment.
 
-This document is incrementally updated. The content is tested on Ubuntu 16.04.
-
-Last updated: 2018/5/1
+The content is tested on Ubuntu 16.04.
 
 <!--
 image: /assets/article_images/2014-11-30-mediator_features/night-track.JPG
