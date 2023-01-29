@@ -34,7 +34,7 @@ baseurl: ""
 # fill in disqus shortname to use disqus
 # disqus: disqus-shortname
 
-google_analytics: UA-67559740-1
+# google_analytics: UA-67559740-1
 
 # social icons and sharing options
 social:
